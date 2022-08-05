@@ -1,8 +1,12 @@
-import 'package:aplopes_app/src/auth/sign_in_screen.dart';
+import 'package:aplopes_app/src/pages/auth/controller/auth_controller.dart';
+import 'package:aplopes_app/src/pages/auth/view/sign_in_screen.dart';
 import 'package:aplopes_app/src/config/custom_colors.dart';
+import 'package:aplopes_app/src/pages_routes/app_pages.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 void main() {
+  Get.put(AuthController());
   runApp(const MyApp());
 }
 
@@ -12,13 +16,14 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Aplopes App',
+    return GetMaterialApp(
+      title: 'Aplopes',
       theme: ThemeData(
         primarySwatch: CustomColors.aplopesBasicColor
       ),
       debugShowCheckedModeBanner: false,
-      home: const SignInScreen(),
+      getPages: AppPage.pages,
+      initialRoute: PagesRoutes.splashRoute,
     );
   }
 }
