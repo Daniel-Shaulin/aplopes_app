@@ -29,7 +29,7 @@ abstract class AppPage{
 }
 
 abstract class PagesRoutes{
-  static const String signIngRoute = '/signin';
+  static const String signInRoute = '/signin';
   static const String signUpRoute = '/signup';
   static const String splashRoute = '/splash';
   static const String baseRout = '/';

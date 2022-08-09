@@ -5,6 +5,7 @@ import 'package:aplopes_app/src/pages/base/base_screen.dart';
 import 'package:aplopes_app/src/config/custom_colors.dart';
 import 'package:aplopes_app/src/pages_routes/app_pages.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class SignInScreen  extends StatelessWidget {
@@ -28,30 +29,8 @@ class SignInScreen  extends StatelessWidget {
               Expanded(
                 child :Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const[
-
-                    Text.rich(TextSpan(
-                      style: TextStyle(
-                        fontSize: 40,
-
-                      ),
-                      children: [
-                        TextSpan(
-                          text: 'Aplopes',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold
-                          ),
-                        ),
-                        TextSpan(
-                          text: 'Technology',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold
-                          ),
-                        )
-                      ]
-                    )),
+                  children: [
+                    SvgPicture.asset('assets/app_images/logo.svg'),
                   ],
                 )
               ),
@@ -116,16 +95,13 @@ class SignInScreen  extends StatelessWidget {
                                     String password = passwordController.text;
                                     String email = emailController.text;
                                     authController.signIn(email: email, password: password);
-                                  }else{
-                                    print('desgraca');
                                   }
-                                //  Get.offNamed(PagesRoutes.baseRout);
+                                //
                                 },
                                 child: authController.isLoading.value ?
                                 CircularProgressIndicator(
                                   color: CustomColors.aplopesBasicColor,
                                 )
-
                                     : const Text('Entrar',
                                   style: TextStyle(fontSize: 18,
                                       color: Colors.white),)
@@ -200,7 +176,6 @@ class SignInScreen  extends StatelessWidget {
                   ),
                 ),
               ),
-
             ],
           ),
         ),
