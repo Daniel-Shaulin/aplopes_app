@@ -4,8 +4,14 @@ part 'token.g.dart';
 //flutter pub run build_runner build
 @JsonSerializable()
 class Token {
-  @JsonKey(name: 'Token')
+  @JsonKey(name: 'access_token')
   String? token;
+  @JsonKey(name : "refresh_token")
+  String? refreshToken;
+  @JsonKey(name : "expires_in")
+  int? expirationToken;
+  @JsonKey(name: "id")
+  int? userId;
 
   Token(this.token);
 

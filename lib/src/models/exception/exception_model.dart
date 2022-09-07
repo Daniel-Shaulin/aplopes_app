@@ -11,6 +11,7 @@ class ExceptionModel{
   String title;
   String detail;
   String userMessage;
+  String? error;
   List<ObjectException>? objectList;
 
   ExceptionModel({
@@ -20,6 +21,7 @@ class ExceptionModel{
     required this.title,
     required this.detail,
     required this.userMessage,
+    this.error,
     this.objectList
   });
 

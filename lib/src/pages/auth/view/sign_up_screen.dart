@@ -1,5 +1,6 @@
 import 'package:aplopes_app/src/pages/auth/components/custom_text_field.dart';
 import 'package:aplopes_app/src/config/custom_colors.dart';
+import 'package:aplopes_app/src/pages/auth/components/validator_signup.dart';
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
@@ -56,7 +57,7 @@ class SignUpScreen extends StatelessWidget {
                               textType: TextInputType.emailAddress),
                          const CustomTextField(
                               icon: Icons.person,
-                              label: 'Nome'
+                              label: 'Nome Completo'
                           ),
                           CustomTextField(
                               icon: Icons.phone,
@@ -78,6 +79,11 @@ class SignUpScreen extends StatelessWidget {
                             label: 'Senha',
                             isSecret: true,
                           ),
+                          CustomTextField(
+                            icon: Icons.lock,
+                            label: 'Confirmar senha',
+                            isSecret: true,
+                          ),
                           SizedBox(
                             height: 50,
                             child:ElevatedButton(
@@ -86,7 +92,9 @@ class SignUpScreen extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(18)
                                 )
                               ),
-                                onPressed: (){},
+                                onPressed: (){
+
+                                },
                                 child: Text('Cadastrar')
                               )
                           )

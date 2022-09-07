@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:aplopes_app/src/models/exception/exception_model.dart';
+import 'package:aplopes_app/src/pages/auth/result/auth_result.dart';
+import 'package:curl_logger_dio_interceptor/curl_logger_dio_interceptor.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
 
@@ -18,25 +20,33 @@ class HttpManager {
     required String method,
     Map? headers,
     Map? body,
-    String? token = ''
+    String? applicationType,
+    String? token = '',
+    int? connectTimeout = 30 * 1000,
+    int? receiveTimeout = 60 * 1000,
   }) async{
-    Dio dio = Dio();
-    //Headers
 
+    BaseOptions baseOptions = BaseOptions(
+      connectTimeout: connectTimeout,
+      receiveTimeout: receiveTimeout
+    );
+    Dio dio = Dio(baseOptions);
+    //Headers
     final defaultHeaders = headers?.cast<String, String>() ?? {}..addAll({
-      'content-type': 'application/json',
-      'accept':'application/json',
-      'Authorization': 'Bearer = $token'
+        'content-type': applicationType ?? 'application/json',
+        'accept':'application/json',
+        'Authorization':token ?? ('Bearer ${token!}')
     });
     try{
       //chamada de endpoint
      Response response = await dio.request(
         url,
-        options: Options(method: method, headers: defaultHeaders,),
+        options: Options(method: method,
+          headers: defaultHeaders, ),
         data: body,
+
       );
      return response.data;
-
      //tratamento de erro
     } on DioError catch(error){
       return error.response?.data ?? {};

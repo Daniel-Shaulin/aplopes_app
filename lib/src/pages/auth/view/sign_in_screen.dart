@@ -77,7 +77,6 @@ class SignInScreen  extends StatelessWidget {
                           return null;
                         },
                       ),
-
                       //Botão entrar
                       SizedBox(
                         height: 50,
