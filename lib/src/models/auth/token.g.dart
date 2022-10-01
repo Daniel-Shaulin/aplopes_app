@@ -17,5 +17,5 @@ Map<String, dynamic> _$TokenToJson(Token instance) => <String, dynamic>{
       'access_token': instance.token,
       'refresh_token': instance.refreshToken,
       'expires_in': instance.expirationToken,
-      'userId': instance.userId,
+      'id': instance.userId,
     };

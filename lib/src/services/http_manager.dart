@@ -13,8 +13,6 @@ abstract class HttpMethods{
   static const String put = 'PUT';
 }
 
-
-
 class HttpManager {
   Future<Map> restRequest({required String url,
     required String method,

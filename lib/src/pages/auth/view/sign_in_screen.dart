@@ -1,5 +1,6 @@
 import 'package:aplopes_app/src/pages/auth/components/custom_text_field.dart';
 import 'package:aplopes_app/src/pages/auth/controller/auth_controller.dart';
+import 'package:aplopes_app/src/pages/auth/services/validators.dart';
 import 'package:aplopes_app/src/pages/auth/view/sign_up_screen.dart';
 import 'package:aplopes_app/src/pages/base/base_screen.dart';
 import 'package:aplopes_app/src/config/custom_colors.dart';
@@ -57,11 +58,7 @@ class SignInScreen  extends StatelessWidget {
                         icon: Icons.email,
                         label: 'Email',
                         controller: emailController,
-                        validator: (email){
-                          if(email == null || email.isEmpty) return 'Digite seu email';
-                          if(!email.isEmail) return 'Digite um email válido';
-                          return null;
-                        },
+                        validator: emailValidators,
                       ),
 
                       //Senha
@@ -70,12 +67,7 @@ class SignInScreen  extends StatelessWidget {
                         label: 'Senha',
                         controller: passwordController,
                         isSecret: true,
-                        validator: (password){
-                          if(password == null || password.isEmpty) return 'Digite sua senha';
-
-                          if(password.length < 8) return 'A senha deve ter pelo menos 8 caractéres';
-                          return null;
-                        },
+                        validator: passwordValidators,
                       ),
                       //Botão entrar
                       SizedBox(
@@ -88,7 +80,7 @@ class SignInScreen  extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(18)
                                 )
                               ),
-                                onPressed: authController.isLoading.value ? null : (){
+                                onPressed: authController.isLoadingSignIn.value ? null : (){
                                 FocusScope.of(context).unfocus();
                                   if(_formKey.currentState!.validate()){
                                     String password = passwordController.text;
@@ -97,9 +89,9 @@ class SignInScreen  extends StatelessWidget {
                                   }
                                 //
                                 },
-                                child: authController.isLoading.value ?
-                                CircularProgressIndicator(
-                                  color: CustomColors.aplopesBasicColor,
+                                child: authController.isLoadingSignIn.value ?
+                                const CircularProgressIndicator(
+                                  color: CustomColors. aplopesBasicColor,
                                 )
                                     : const Text('Entrar',
                                   style: TextStyle(fontSize: 18,

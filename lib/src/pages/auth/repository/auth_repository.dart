@@ -1,16 +1,35 @@
 import 'dart:convert';
 
+import 'package:aplopes_app/src/config/generic/generic_result.dart';
 import 'package:aplopes_app/src/constants/endpoints.dart';
 import 'package:aplopes_app/src/models/auth/token.dart';
 import 'package:aplopes_app/src/models/exception/exception_model.dart';
+import 'package:aplopes_app/src/models/user_model.dart';
 import 'package:aplopes_app/src/pages/auth/result/auth_result.dart';
 import 'package:aplopes_app/src/services/http_manager.dart';
 
 class AuthRepository{
   final HttpManager _httpManager = HttpManager();
 
+  handleUserOrFail(Map<dynamic, dynamic> result){
+    if(result['access_token'] != null){
+      final token = Token.fromJson(Map.from(result));
+      return GenericResult.sucess(token);
+    }else{
+      return GenericResult.error(result['error_description'] ?? 'Erro interno do servidor!');
+    }
+  }
 
-  Future<AuthResult> signIn({required String email, required String password}) async{
+  handleUseOrFail(Map<dynamic, dynamic> result){
+    if(result[''] != null){
+      final token = Token.fromJson(Map.from(result));
+      return AuthResult.sucess(token);
+    }else{
+      return AuthResult.error(result['error_description'] ?? 'Erro interno do servidor!');
+    }
+  }
+
+  Future<GenericResult> signIn({required String email, required String password}) async{
      final result = await _httpManager.restRequest(
          url: Endpoints.signin,
          method: HttpMethods.post,
@@ -22,19 +41,10 @@ class AuthRepository{
             'grant_type': 'password'
           }
       );
-     if(result['access_token'] != null){
-       final token = Token.fromJson(Map.from(result));
-       return AuthResult.sucess(token);
-     }else{
-       if(result.isEmpty){
-         return AuthResult.error("Erro ao conectar-se no servidor");
-       }
- //     final exception = ExceptionModel.fromJson(Map.from(result));
-        return AuthResult.error(result['error_description']);
-     }
+     return handleUserOrFail(result);
   }
 
-  Future<AuthResult> refreshToken({required String refreshToken}) async{
+  Future<GenericResult> refreshToken({required String refreshToken}) async{
     final result = await _httpManager.restRequest(
         url: Endpoints.signin,
         method: HttpMethods.post,
@@ -45,13 +55,17 @@ class AuthRepository{
           'grant_type': 'refresh_token'
         }
     );
-    if(result['access_token'] != null){
-      final token = Token.fromJson(Map.from(result));
-      return AuthResult.sucess(token);
-    }else{
- //     final exception = ExceptionModel.fromJson(Map.from(result));
-      return AuthResult.error(result['error_description']);
-    }
+   return handleUserOrFail(result);
   }
+
+  Future<GenericResult> signUpUser(UserModel user) async{
+    final result = await _httpManager.restRequest(
+        url: Endpoints.signin,
+        method: HttpMethods.post,
+        body: user.toJson()
+    );
+    return handleUserOrFail(result);
+  }
+
 
 }
